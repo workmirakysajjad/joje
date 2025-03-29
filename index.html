@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زیباترین دختر دنیا</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background-color: #ffe6f2;
+            text-align: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff66b2;
+            font-size: 24px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff99cc;
+            border-radius: 5px;
+            max-width: 90%;
+        }
+        button {
+            background-color: #ff99cc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #ff66b2;
+        }
+        .message-container {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            background-color: #fff;
+            border: 2px solid #ff99cc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: right;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #ff99cc;
+            transform: rotate(-45deg);
+            animation: float 4s infinite;
+            opacity: 0.8;
+        }
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        .heart:before {
+            top: -8px;
+            left: 0;
+        }
+        .heart:after {
+            left: 8px;
+            top: 0;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(200px) rotate(-45deg);
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 20px;
+            }
+            button, input {
+                font-size: 14px;
+            }
+            .message-container {
+                width: 70%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>زیباترین دختر دنیا کیه؟</h1>
+    <input type="text" id="nameInput" placeholder="اسم را وارد کنید">
+    <button onclick="checkAnswer()">بررسی</button>
+
+    <script>
+        function checkAnswer() {
+            const input = document.getElementById('nameInput').value.trim();
+            if (document.getElementById('messageBox')) return; // جلوگیری از پیام‌های تکراری
+
+            const messageContainer = document.createElement('div');
+            messageContainer.className = 'message-container';
+            messageContainer.id = 'messageBox';
+
+            const messageText = document.createElement('p');
+            messageText.style.color = '#333'; // رنگ متن برای خوانایی بهتر
+            messageText.style.fontFamily = 'Tahoma, sans-serif'; // فونت زیبا و خوانا
+
+            const closeButton = document.createElement('button');
+            closeButton.className = 'close-btn';
+
+            if (input === "غزاله") {
+                messageText.textContent = 'آفرین! درست حدس زدی!';
+                closeButton.textContent = 'آفرین';
+            } else {
+                messageText.textContent = 'زیباترین دختر دنیا غزال است!';
+                closeButton.textContent = 'دوباره امتحان کن بچه پررو';
+            }
+
+            messageContainer.appendChild(messageText);
+            closeButton.onclick = () => messageContainer.remove();
+            messageContainer.appendChild(closeButton);
+
+            document.body.appendChild(messageContainer);
+
+            createFloatingHearts(messageContainer);
+        }
+
+        // تولید قلب‌های شناور در باکس پیام
+        function createFloatingHearts(container) {
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * container.offsetWidth + 'px';
+                heart.style.top = Math.random() * container.offsetHeight + 'px';
+                heart.style.animationDelay = `${Math.random() * 4}s`;
+                heart.style.backgroundColor = getRandomColor();
+                container.appendChild(heart);
+            }
+        }
+
+        // انتخاب رنگ تصادفی برای قلب‌ها
+        function getRandomColor() {
+            const colors = ['#ff99cc', '#ff6699', '#ff66b2', '#ffccff', '#ff3399'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
